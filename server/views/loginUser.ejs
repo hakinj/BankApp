@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <section class="login-container">
+        <div class="login-form">
+            <h1>Login User</h1>
+            <form>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+                <p class="errorEmail" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;"></p>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <p class="errorPassword" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;">
+                </p>
+
+                <button type="submit">Log In</button>
+            </form>
+            <p>Don't have an account? <a href="/api/v1/signup-user">Sign up here</a></p>
+            <p>Forgot Password? <a href="/api/v1/submit-email">click here</a></p>
+        </div>
+    </section>
+
+    <script>
+        const form = document.querySelector('form')
+
+        form.addEventListener('submit', async (e) => {
+            try {
+                e.preventDefault()
+                let email = document.querySelector('#email').value
+                let password = document.querySelector('#password').value
+                let errorEmail = document.querySelector('.errorEmail');
+                let errorPassword = document.querySelector('.errorPassword');
+
+                await fetch('/api/v1/login-user', {
+                    method: "POST",
+                    body: JSON.stringify({ email, password }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                    .then(response => {
+
+                        response.json()
+                            .then(data => {
+                                if (data.success) {
+                                    (async function(){
+                                      await  window.location.assign('/api/v1/home')
+                                    })()
+                                    
+                                }
+
+                                if(!data.success){
+                                  errorEmail.textContent = data.error.email
+                                  errorPassword.textContent = data.error.password
+                                }
+
+
+                            })
+                    })
+
+                console.log(data)
+            }
+            catch (err) {
+
+            }
+        })
+    </script>
+
+</body>
+
+</html>

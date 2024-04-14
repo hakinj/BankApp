@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Comfirmation</title>
+</head>
+
+<body>
+
+    <section class="login-container">
+        <div class="login-form">
+            <h1>Comfirm Transfer</h1>
+            <p class="transferError" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;"></p>
+            <form >
+                <label for="email">Account Number:</label>
+                <!-- action="/api/v1/credit-customer?_method=PUT" method="post" -->
+                <input type="number" id="email" name="accountNum"
+                 value="<%=userToCredit.accountNum%>"
+                 readonly
+                 class="accountNum"
+                 required>
+                <p class="errorEmail" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;"></p>
+                
+                <label for="email">Account Name:</label>
+                <input type="text" id="email" name="nill"
+                 value="<%=userToCredit.firstname%> <%=userToCredit.lastname%>"
+                 readonly
+                 required>
+                <p class="errorEmail" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;"></p>
+
+                <label for="password">Amount:</label>
+                <input type="number" id="password" name="amount"
+                readonly
+                value="<%=amount%>"
+                class="amount"
+                 required>
+                <p class="errorPassword" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;">
+                </p>
+                <label for="password">Pin:</label>
+                <input type="password" id="password" name="pin" required class="pin">
+                <p class="errorPassword" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;">
+                </p>
+
+                <button type="submit">Send</button>
+            </form>
+            
+        </div>
+    </section>
+
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let accountNum = document.querySelector(".accountNum").value
+            let amount = document.querySelector(".amount").value
+            let pin = document.querySelector(".pin").value
+            let transferError = document.querySelector('.transferError')
+
+            const response = await fetch("/api/v1/credit-customer", {
+                method:"PUT",
+                headers:{"Content-Type": "application/json"},
+                body: JSON.stringify({accountNum, amount, pin})
+            });
+            const result = await response.json();
+            console.log(result)
+            if(result.success){
+
+            }else{
+               transferError.textContent = result.error
+            }
+        })
+    </script>
+
+</body>
+
+</html>

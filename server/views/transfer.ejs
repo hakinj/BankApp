@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Transfer</title>
+</head>
+
+<body>
+
+    <section class="login-container">
+        <div class="login-form">
+            <h1>Transfer</h1>mongosh
+            <form action="/api/v1/credit-customer?_method=PUT" method="post">
+                <label for="email">Account Number:</label>
+                <input type="number" id="email" name="accountNum" required>
+                <p class="errorEmail" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;"></p>
+
+                <label for="password">Amount:</label>
+                <input type="number" id="password" name="amount" required>
+                <p class="errorPassword" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;">
+                </p>
+                <label for="password">Pin:</label>
+                <input type="password" id="password" name="pin" required>
+                <p class="errorPassword" style="color: red; font-family: cursive; font-size: smaller; margin-top: 0;">
+                </p>
+
+                <button type="submit">Send</button>
+            </form>
+            
+        </div>
+    </section>
+
+    
+
+</body>
+
+</html>
